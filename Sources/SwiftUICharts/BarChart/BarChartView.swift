@@ -50,7 +50,6 @@ public struct BarChartView : View {
                     .padding()
                     
                     BarChartRow(data: data.points.map({$0.value}), touchLocation: $touchLocation, showValue: $showValue, showLabelValue: $showLabelValue, cellColor: .orange, currentValue: $currentValue, width: width)
-                        .frame(minHeight: width)
 
                     
                     if legend != nil && !showLabelValue{

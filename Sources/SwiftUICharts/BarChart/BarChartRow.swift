@@ -27,8 +27,8 @@ struct BarChartRow : View {
     var body: some View {
         HStack(alignment: .bottom, spacing: width/Double(data.count * 3)){
             ForEach(data.indices, id: \.self) { index in
-                let isSelected = self.touchLocation >= Double(index)/Double(data.count) && self.touchLocation < Double(index+1)/Double(data.count)
-                BarChartCell(value:data[index]/maxValue,
+                let isSelected = isSelected(index: index)
+                BarChartCell(value: data[index]/maxValue,
                              index: index,
                              color: cellColor,
                              gradient: gradient)
@@ -46,6 +46,12 @@ struct BarChartRow : View {
         }
         .padding([.top, .leading, .trailing], 10)
     }
+    
+    func isSelected(index: Int) -> Bool{
+        (self.touchLocation >= Double(index)/Double(data.count)) && (self.touchLocation < Double(index+1)/Double(data.count))
+    }
+    
+    
 }
 
 #if DEBUG

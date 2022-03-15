@@ -20,8 +20,10 @@ struct IndicatorPoint: View {
     }
 }
 
+#if DEBUG
 struct IndicatorPoint_Previews: PreviewProvider {
     static var previews: some View {
         IndicatorPoint()
     }
 }
+#endif

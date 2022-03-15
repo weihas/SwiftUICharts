@@ -16,25 +16,24 @@ struct LabelView: View {
     }
     
     var body: some View {
-        VStack{
+        VStack(spacing: 0.0) {
             ArrowUp()
                 .fill(Color.white)
                 .frame(width: 20, height: 12, alignment: .center)
                 .shadow(color: Color.gray, radius: 8, x: 0, y: 0)
-                .offset(x: offset, y: 12)
-            ZStack{
-                RoundedRectangle(cornerRadius: 8).frame(width: 100, height: 32, alignment: .center).foregroundColor(Color.white).shadow(radius: 8)
-                Text(self.title)
-                    .font(.caption)
-                    .bold()
-                    .foregroundColor(.black)
-                ArrowUp()
-                    .fill(Color.white)
-                    .frame(width: 20, height: 12, alignment: .center)
-                    .zIndex(2)
-                    .offset(x: offset, y: -20)
-
-            }
+                .offset(x: offset)
+            Text(title)
+                .font(.caption)
+                .bold()
+                .foregroundColor(.black)
+                .padding(.horizontal,10)
+                .padding(.vertical,10)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.white)
+                        .shadow(radius: 8)
+                )
+            
         }
     }
 }
@@ -50,8 +49,15 @@ struct ArrowUp: Shape {
     }
 }
 
+#if DEBUG
 struct LabelView_Previews: PreviewProvider {
     static var previews: some View {
-        LabelView(arrowOffset: 0, title: "Tesla model 3")
+        Group {
+            LabelView(arrowOffset: 0, title: "Tesla model 3")
+            LabelView(arrowOffset: 30, title: "Tesla model 3")
+            LabelView(arrowOffset: -30, title: "Tesla model 3")
+        }
+       
     }
 }
+#endif
