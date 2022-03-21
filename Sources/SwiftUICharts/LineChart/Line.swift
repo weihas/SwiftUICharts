@@ -18,24 +18,9 @@ import SwiftUI
 //    var index: Int = 0
 //    let padding: CGFloat = 30
 //    var curvedLines: Bool = true
-//    
-//    struct CurveLine: Shape {
-//        var points: [Double]
-//        
-//        
-//        func path(in rect: CGRect) -> Path {
-//            let p = Path()
-//            p.move(to:  CGPoint(x: rect.minX, y: (1-(points.first - min)/(max - min)) * rect.height))
-//            
-//            for point in points {
-//                p.addQuadCurve(to: <#T##CGPoint#>, control: <#T##CGPoint#>)
-//            }
-//        }
-//    }
-//    
+//
 //    var path: Path {
 //        let points = self.data.pointValues
-//        Path
 //        return curvedLines ? Path.quadCurvedPathWithPoints(points: points, step: CGPoint(x: stepWidth, y: stepHeight), globalOffset: minDataValue) : Path.linePathWithPoints(points: points, step: CGPoint(x: stepWidth, y: stepHeight))
 //    }
 //    var closedPath: Path {
@@ -45,7 +30,7 @@ import SwiftUI
 //    
 //    public var body: some View {
 //        ZStack {
-//            if(self.showFull && self.showBackground){
+//            if showFull && showBackground {
 //                self.closedPath
 //                    .fill(LinearGradient(gradient: Gradient(colors: [Colors.GradientUpperBlue, .white]), startPoint: .bottom, endPoint: .top))
 //                    .transition(.scale)
@@ -66,7 +51,7 @@ import SwiftUI
 //                .onDisappear {
 //                    self.showFull = false
 //                }
-//            if(self.showIndicator) {
+//            if showIndicator {
 //                IndicatorPoint()
 //                    .position(self.getClosestPointOnPath(touchLocation: self.touchLocation))
 //                    .rotationEffect(.degrees(180), anchor: .center)
@@ -82,6 +67,37 @@ import SwiftUI
 //    
 //}
 //
+//fileprivate struct StraightLine: Shape {
+//    var nodes: [Double]
+//    
+//    func path(in rect: CGRect) -> Path {
+//        var p = Path()
+//        guard let first = nodes.first, nodes.count > 1 else { return p }
+//        let step = rect.width / Double(nodes.count - 1)
+//        p.move(to: CGPoint(x: rect.minX, y: rect.height * (1 - first)))
+//        for (index,node) in nodes.enumerated() where index > 0 {
+//            p.addLine(to: CGPoint(x: rect.minX + Double(index)*step, y: rect.height * (1 - node)))
+//        }
+//        return p
+//    }
+//}
+//
+////fileprivate struct CurveLine: Shape {
+////    var nodes: [Double]
+////
+////    func path(in rect: CGRect) -> Path {
+////        let p = Path()
+////        p.move(to:  CGPoint(x: rect.minX, y: (1-(points.first - min)/(max - min)) * rect.height))
+////
+////        for point in points {
+////            p.addQuadCurve(to: <#T##CGPoint#>, control: <#T##CGPoint#>)
+////        }
+////    }
+////}
+//
+//
+//
+//#if DEBUG
 //struct Line_Previews: PreviewProvider {
 //    static var previews: some View {
 //        GeometryReader{ geometry in
@@ -89,3 +105,4 @@ import SwiftUI
 //        }.frame(width: 320, height: 160)
 //    }
 //}
+//#endif

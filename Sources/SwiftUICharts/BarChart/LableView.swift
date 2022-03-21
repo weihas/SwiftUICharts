@@ -12,7 +12,7 @@ struct LabelView: View {
     var title:String
     
     private var offset: Double{
-        return max(-36,min(36, arrowOffset))
+        return max(-18,min(18, arrowOffset))
     }
     
     var body: some View {
@@ -26,8 +26,7 @@ struct LabelView: View {
                 .font(.caption)
                 .bold()
                 .foregroundColor(.black)
-                .padding(.horizontal,10)
-                .padding(.vertical,10)
+                .padding(10)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.white)
@@ -35,6 +34,7 @@ struct LabelView: View {
                 )
             
         }
+        .frame(minWidth: 100)
     }
 }
 
@@ -54,8 +54,8 @@ struct LabelView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             LabelView(arrowOffset: 0, title: "Tesla model 3")
-            LabelView(arrowOffset: 30, title: "Tesla model 3")
-            LabelView(arrowOffset: -30, title: "Tesla model 3")
+            LabelView(arrowOffset: 36, title: "Tesla model 3")
+            LabelView(arrowOffset: -36, title: "Tesla model 3")
         }
        
     }

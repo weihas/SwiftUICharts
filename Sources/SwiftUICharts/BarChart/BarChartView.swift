@@ -37,49 +37,44 @@ public struct BarChartView : View {
     
     public var body: some View {
         GeometryReader{ geometry in
-            let width = geometry.frame(in: .local).width
-            ZStack{
-                VStack(alignment: .leading){
-                    HStack{
-                        Text(showValue ? "\(self.currentValue)" : self.title)
-                            .font(.headline)
-                        Spacer()
-                        self.cornerImage
-                            .imageScale(.large)
-                    }
-                    .padding()
-                    
-                    BarChartRow(data: data.points.map({$0.value}), touchLocation: $touchLocation, showValue: $showValue, showLabelValue: $showLabelValue, cellColor: .orange, currentValue: $currentValue, width: width)
-
-                    
-                    if legend != nil && !showLabelValue{
-                        Text(legend!)
-                            .font(.headline)
-                            .padding()
-                    }else if showLabelValue, let name = getCurrentValue().name  {
-                        LabelView(arrowOffset: getArrowOffset(touchLocation: touchLocation, with: width ),
-                                  title: name)
-                            .offset(x: getLabelViewOffset(touchLocation: touchLocation, with: width), y: -6)
-                    }
+            let width = geometry.frame(in: .global).width
+            VStack(alignment: .leading){
+                HStack{
+                    Text(showValue ? "\(self.currentValue)" : self.title)
+                        .font(.headline)
+                    Spacer()
+                    self.cornerImage
+                        .imageScale(.large)
+                }
+                .padding()
+                
+                BarChartRow(data: data, touchLocation: $touchLocation, showValue: $showValue, showLabelValue: $showLabelValue, currentValue: $currentValue, cellColor: .orange, width: width)
+                
+                
+                if legend != nil && !showLabelValue{
+                    Text(legend!)
+                        .font(.headline)
+                        .padding()
+                }else if showLabelValue, let name = getCurrentValue().name  {
+                    LabelView(arrowOffset: getArrowOffset(touchLocation: touchLocation, with: width ),
+                              title: name)
+                    .offset(x: getLabelViewOffset(touchLocation: touchLocation, with: width), y: -6)
                 }
             }
-            .gesture(DragGesture()
-                        .onChanged(
-                            { value in
-                                touchLocation = value.location.x/geometry.size.width
-                                showValue = true
-                                showLabelValue = true
-                                currentValue = getCurrentValue().value
-                            })
-                     
-                        .onEnded(
-                            { value in
-                                self.showValue = false
-                                self.showLabelValue = false
-                                self.touchLocation = -1
-                            })
+            .gesture(
+                DragGesture()
+                    .onChanged{ value in
+                        touchLocation = value.location.x/width
+                        showValue = true
+                        showLabelValue = true
+                        currentValue = getCurrentValue().value
+                    }
+                    .onEnded{ value in
+                        self.showValue = false
+                        self.showLabelValue = false
+                        self.touchLocation = -1
+                    }
             )
-            .padding()
         }
     }
     
@@ -99,10 +94,10 @@ public struct BarChartView : View {
     }
     
     
-    private func getCurrentValue() -> (name: String,value: Double) {
-        guard self.data.points.count > 0 else { return ("",0) }
-        let index = max(0,min(self.data.points.count-1, Int(floor(self.touchLocation * Double(self.data.points.count)))))
-        return self.data.points[index]
+    private func getCurrentValue() -> ChartNode {
+        guard self.data.count > 0 else { return .init(id: 0, name: "", value: 0) }
+        let index = max(0,min(self.data.count-1, Int(floor(self.touchLocation * Double(self.data.count)))))
+        return self.data.nodes[index]
     }
 }
 

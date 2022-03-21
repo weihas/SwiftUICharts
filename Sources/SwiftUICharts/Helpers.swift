@@ -39,7 +39,7 @@ class HapticFeedback {
 }
 
 public class TestData{
-    static public var data:ChartData = ChartData(points: [37,72,51,22,39,47,66,85,50])
+    static public var data:ChartData = ChartData(values: [37,72,51,22,39,47,66,85,50])
     static public var values:ChartData = ChartData(values: [("2017 Q3",220),
                                                             ("2017 Q4",1550),
                                                             ("2018 Q1",8180),
