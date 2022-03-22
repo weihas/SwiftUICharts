@@ -17,6 +17,11 @@ public struct ChartData {
         self.init(values: values.map({("",Double($0))}))
     }
     
+    public init<N: BinaryFloatingPoint>(values:[N]){
+        self.init(values: values.map({("",Double($0))}))
+    }
+    
+    
     public init<N: BinaryInteger>(values:[(String,N)]){
         self.init(values: values.map({($0.0,Double($0.1))}))
     }

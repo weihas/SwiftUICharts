@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 struct GradientColor {
     private let gradient: Gradient
@@ -39,6 +44,7 @@ class HapticFeedback {
 }
 
 public class TestData{
+    static public var gpa: ChartData = ChartData(values: [3.4,1.0,1.8,2.4,2.9,4.0,3.8,3.0])
     static public var data:ChartData = ChartData(values: [37,72,51,22,39,47,66,85,50])
     static public var values:ChartData = ChartData(values: [("2017 Q3",220),
                                                             ("2017 Q4",1550),
@@ -78,5 +84,4 @@ extension Color{
     }
     
     static var LegendDarkColor: Color{ Color(hexString: "#545454")}
-    
 }
