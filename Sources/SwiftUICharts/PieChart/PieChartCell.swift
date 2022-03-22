@@ -9,11 +9,12 @@
 import SwiftUI
 
 struct PieSlice: Identifiable {
-    var id = UUID()
+    var id: Int
     var startDeg: Double
     var endDeg: Double
     var value: Double
     var normalizedValue: Double
+    var color: Color
 }
 
 public struct PieChartCell : View {

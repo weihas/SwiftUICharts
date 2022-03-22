@@ -15,6 +15,7 @@ public struct PieChartView : View {
     public var legend: String?
     public var dropShadow: Bool
     public var valueSpecifier:String
+    var colors: [Color]?
     
     @State private var showValue = false
     @State private var currentValue: Double = 0 {
@@ -33,25 +34,26 @@ public struct PieChartView : View {
         colorScheme == .dark ? Color.white : Color.black
     }
     
-    public init(data: [Double], title: String, legend: String? = nil, dropShadow: Bool? = true, valueSpecifier: String? = "%.1f"){
+    public init(data: [Double], title: String, legend: String? = nil, colors: [Color] = [] ,dropShadow: Bool? = true, valueSpecifier: String? = "%.1f"){
         self.data = data
         self.title = title
         self.legend = legend
         self.dropShadow = dropShadow!
         self.valueSpecifier = valueSpecifier!
+        self.colors = colors
     }
     
     public var body: some View {
-        Rectangle()
+        RoundedRectangle(cornerRadius: 20)
             .fill(backgroundColor)
-            .cornerRadius(20)
-            .shadow(radius: self.dropShadow ? 12 : 0)
             .overlay(
                 VStack(alignment: .leading){
                     HStack{
                         if(!showValue){
                             Text(title)
                                 .font(.headline)
+                                .minimumScaleFactor(0.6)
+                                .lineLimit(2)
                         }else{
                             Text("\(currentValue, specifier: valueSpecifier)")
                                 .font(.headline)
@@ -61,11 +63,11 @@ public struct PieChartView : View {
                             .imageScale(.large)
                             .foregroundColor(.gray)
                     }.padding()
-                    PieChartRow(data: data, backgroundColor: backgroundColor, accentColor: .orange, showValue: $showValue, currentValue: $currentValue)
+                    PieChartRow(data: data, backgroundColor: backgroundColor, colors: colors, showValue: $showValue, currentValue: $currentValue)
                         .foregroundColor(.white).padding(self.legend != nil ? 0 : 12).offset(y:self.legend != nil ? 0 : -10)
                     if(self.legend != nil) {
                         Text(self.legend!)
-                            .font(.headline)
+                            .font(.caption)
                             .foregroundColor(.gray)
                             .padding()
                     }

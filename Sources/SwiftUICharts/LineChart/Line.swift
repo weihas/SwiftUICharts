@@ -24,23 +24,18 @@ public struct Line: View {
     var curvedLines: Bool = true
     
     public var body: some View {
-        GeometryReader{ geometry in
-            let frame = geometry.size
-            let height = frame.height * 4 / 5
-            let width = frame.width - 20
-            StraightLine(nodes: data.pointValues.map({($0 - minValue)/(maxValue - minValue)}))
-                .trim(from: 0, to: self.showFull ? 1:0)
-                .stroke(color ,style: StrokeStyle(lineWidth: 3, lineJoin: .round))
-                .animation(Animation.easeOut(duration: 1.2).delay(Double(self.index)*0.4))
-                .frame(width: width, height: height)
-                .offset(x: 30, y: frame.height / 8.0)
-                .onAppear {
-                    self.showFull = true
-                }
-                .onDisappear {
-                    self.showFull = false
-                }
-        }
+        StraightLine(nodes: data.pointValues.map({($0 - minValue)/(maxValue - minValue)}))
+            .trim(from: 0, to: self.showFull ? 1:0)
+            .stroke(color ,style: StrokeStyle(lineWidth: 3, lineJoin: .round))
+            .animation(Animation.easeOut(duration: 1.2).delay(Double(self.index)*0.4))
+            .padding(.leading, 30)
+            .padding(.bottom, 10)
+            .onAppear {
+                self.showFull = true
+            }
+            .onDisappear {
+                self.showFull = false
+            }
     }
 }
 
