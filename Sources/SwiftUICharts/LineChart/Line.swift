@@ -31,7 +31,9 @@ public struct Line: View {
             .padding(.leading, 30)
             .padding(.bottom, 10)
             .onAppear {
-                self.showFull = true
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.8) {
+                    self.showFull = true
+                }
             }
             .onDisappear {
                 self.showFull = false
